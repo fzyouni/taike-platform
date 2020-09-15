@@ -1,4 +1,5 @@
 import axios from 'axios'
+import qs from 'qs'
 import store from '@/store'
 // import { Spin } from 'iview'
 const addErrorLog = errorInfo => {
@@ -72,6 +73,10 @@ class HttpRequest {
   request (options) {
     debugger
     const instance = axios.create()
+    // eslint-disable-next-line no-prototype-builtins
+    if (options.hasOwnProperty('data')) {
+      options.data = qs.stringify(options.data)
+    }
     options = Object.assign(this.getInsideConfig(), options)
     this.interceptors(instance, options.url)
     return instance(options)
