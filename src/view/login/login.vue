@@ -33,10 +33,14 @@ export default {
       debugger
       this.handleLogin({ userName, userPwd }).then(res => {
         debugger
-        this.getUserInfo().then(res => {
-          this.$router.push({
-            name: this.$config.homeName
-          })
+        this.getUserInfo(res).then(res => {
+          if (res.status === 'success') {
+            this.$router.push({
+              name: this.$config.homeName
+            })
+          } else {
+
+          }
         })
       })
     }
