@@ -51,6 +51,35 @@ export default [
     ]
   },
   {
+    path: '/duty',
+    name: 'duty',
+    meta: {
+      icon: 'logo-buffer',
+      title: '值班管理'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'dutyPlan',
+        name: 'dutyPlan',
+        meta: {
+          icon: 'ios-calendar-outline',
+          title: '值班计划'
+        },
+        component: () => import('@/view/components/fullcalendar/fullcalendar.vue')
+      },
+      {
+        path: 'tree_select_page1',
+        name: 'tree_select_page1',
+        meta: {
+          icon: 'md-arrow-dropdown-circle',
+          title: '树状下拉选择器'
+        },
+        component: () => import('@/view/components/tree-select/index.vue')
+      }
+    ]
+  },
+  {
     path: '/qr_code',
     name: 'qr_code',
     component: Main,
@@ -255,15 +284,6 @@ export default [
           title: '自定义图标'
         },
         component: () => import('@/view/components/icons/icons.vue')
-      },
-      {
-        path: 'fullcalendar_page',
-        name: 'fullcalendar_page',
-        meta: {
-          icon: 'ios-calendar-outline',
-          title: 'FullCalendar'
-        },
-        component: () => import('@/view/components/fullcalendar/fullcalendar.vue')
       }
     ]
   },
