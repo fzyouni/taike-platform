@@ -30,10 +30,8 @@ export default {
       'getUserInfo'
     ]),
     handleSubmit ({ userName, userPwd }) {
-      debugger
       this.handleLogin({ userName, userPwd }).then(res => {
-        debugger
-        this.getUserInfo(res).then(res => {
+        this.getUserInfo(userName).then(res => {
           if (res.status === 'success') {
             this.$router.push({
               name: this.$config.homeName

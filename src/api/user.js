@@ -5,7 +5,6 @@ export const login = ({ userName, userPwd }) => {
     userName,
     userPwd
   }
-  debugger
   return axios.request({
     url: 'login/login',
     data,
@@ -13,14 +12,15 @@ export const login = ({ userName, userPwd }) => {
   })
 }
 
-export const getUserInfo = (token, loginName) => {
+export const getUserInfo = (token, userName) => {
+  debugger
   return axios.request({
     headers: {
       authToken: token
     },
     url: 'user/showUserInfoByLoginName',
     params: {
-      loginName
+      loginName: userName
     },
     method: 'get'
   })

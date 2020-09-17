@@ -75,7 +75,6 @@ export default {
   actions: {
     // 登录
     handleLogin ({ commit }, { userName, userPwd }) {
-      debugger
       userName = userName.trim()
       return new Promise((resolve, reject) => {
         login({
@@ -111,16 +110,16 @@ export default {
       })
     },
     // 获取用户相关信息
-    getUserInfo ({ state, commit }, { loginName }) {
+    getUserInfo ({ state, commit }, userName) {
       return new Promise((resolve, reject) => {
         try {
-          getUserInfo(state.token, loginName).then(res => {
+          getUserInfo(state.token, userName).then(res => {
             const data = res.data
             if (data.status === 'success') {
-              commit('setAvator', data.avator)
-              commit('setUserName', data.name)
-              commit('setUserId', data.user_id)
-              commit('setAccess', data.access)
+              // commit('setAvator', data.activateState)
+              commit('setUserName', data.data.userName)
+              commit('setUserId', data.data.userId)
+              commit('setAccess', data.data.activateState)
               commit('setHasGetInfo', true)
               resolve(data)
             } else {
