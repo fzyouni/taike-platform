@@ -25,6 +25,10 @@ export default {
    */
   homeName: 'home',
   /**
+   * @description 默认登录url
+   */
+  loginUrl: 'login/login',
+  /**
    * @description 需要加载的插件
    */
   plugin: {

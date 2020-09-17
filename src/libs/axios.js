@@ -1,6 +1,8 @@
 import axios from 'axios'
 import qs from 'qs'
 import store from '@/store'
+import conf from '@/config'
+import { getToken } from '@/libs/util'
 // import { Spin } from 'iview'
 const addErrorLog = errorInfo => {
   const { statusText, status, request: { responseURL } } = errorInfo
@@ -77,6 +79,9 @@ class HttpRequest {
     // eslint-disable-next-line no-prototype-builtins
     if (options.hasOwnProperty('data')) {
       options.data = qs.stringify(options.data)
+    }
+    if (options.url !== conf.loginUrl && !Object.prototype.hasOwnProperty.call(options, 'headers')) {
+      options.headers = { authToken: getToken() }
     }
     options = Object.assign(this.getInsideConfig(), options)
     this.interceptors(instance, options.url)
