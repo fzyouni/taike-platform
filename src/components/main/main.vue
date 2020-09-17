@@ -218,7 +218,7 @@ export default {
       })
     }
     // 获取未读消息条数
-    this.getUnreadMessageCount()
+    // this.getUnreadMessageCount()
 
     // 监听浏览器窗口大小变化
     window.onresize = () => {
