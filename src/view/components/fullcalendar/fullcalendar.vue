@@ -63,16 +63,16 @@ export default {
         if (status === 'success') {
           data.map(item => {
             if (item.classesCode === 'classes1') {
-              item.color = '#33dbe7'
+              item.color = '#88945f'
               item.order = 1
             } else if (item.classesCode === 'classes2') {
-              item.color = '#6ee74b'
+              item.color = 'rgb(130,205,188)'
               item.order = 2
             } else if (item.classesCode === 'classes3') {
-              item.color = '#4ee7c1'
+              item.color = '#73a999'
               item.order = 3
             } else {
-              item.color = '#1cafe7'
+              item.color = '#5197b0'
               item.order = 4
             }
           })
@@ -99,14 +99,6 @@ export default {
       // this.calendarApi.gotoDate('2019-08-01') // call a method on the Calendar object
     },
     handleDateClick (arg) {
-      if (confirm('Would you like to add an event to ' + arg.dateStr + ' ?')) {
-        this.calendarEvents.push({ // add new event data
-          title: 'New Event',
-          start: arg.date,
-          allDay: arg.allDay
-        })
-      }
-      this.calendarApi.refetchEvents()
     },
     handleEventClick (info) {
       alert('Event: ' + info.event.title)
