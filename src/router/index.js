@@ -13,7 +13,11 @@ const router = new Router({
   mode: 'history'
 })
 const LOGIN_PAGE_NAME = 'login'
-
+// cv以下代码解决路由地址重复的报错问题(一劳永逸)
+const originalPush = Router.prototype.push
+Router.prototype.push = function push (location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 const turnTo = (to, access, next) => {
   debugger
   if (canTurnTo(to.name, access, routes)) next() // 有权限，可访问

@@ -13,6 +13,7 @@
       :plugins="calendarPlugins"
       :weekends="calendarWeekends"
       :events="getCalendarEvents"
+      eventOrder="order"
       :eventLimit="true"
       eventLimitText="更多"
       @dateClick="handleDateClick"
@@ -49,11 +50,6 @@ export default {
       ],
       calendarWeekends: true,
       calendarEvents: [ // initial event data
-        {
-          title: 'Event Now',
-          start: new Date(),
-          color: '#A61000'
-        }
       ],
       calendarApi: null
     }
@@ -65,7 +61,22 @@ export default {
         // eslint-disable-next-line no-unused-vars
         const { code, status, message, data } = res.data
         if (status === 'success') {
-          this.calendarEvents.push(data)
+          data.map(item => {
+            if (item.classesCode === 'classes1') {
+              item.color = '#33dbe7'
+              item.order = 1
+            } else if (item.classesCode === 'classes2') {
+              item.color = '#6ee74b'
+              item.order = 2
+            } else if (item.classesCode === 'classes3') {
+              item.color = '#4ee7c1'
+              item.order = 3
+            } else {
+              item.color = '#1cafe7'
+              item.order = 4
+            }
+          })
+          this.calendarEvents = data
           this.calendarApi.refetchEvents()
         }
       })
@@ -85,7 +96,7 @@ export default {
       this.calendarWeekends = !this.calendarWeekends // update a property
     },
     gotoPast () {
-      this.calendarApi.gotoDate('2019-08-01') // call a method on the Calendar object
+      // this.calendarApi.gotoDate('2019-08-01') // call a method on the Calendar object
     },
     handleDateClick (arg) {
       if (confirm('Would you like to add an event to ' + arg.dateStr + ' ?')) {
