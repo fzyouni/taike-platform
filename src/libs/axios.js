@@ -52,6 +52,7 @@ class HttpRequest {
     })
     // 响应拦截
     instance.interceptors.response.use(res => {
+      debugger
       this.destroy(url)
       const { data, status } = res
       return { data, status }

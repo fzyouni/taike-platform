@@ -40,6 +40,7 @@ export default {
     nowPageSize (index) {
       // 实时获取当前需要显示的条数
       this.pageSize = index
+      this.initDutyClassesList()
     },
     changePage () {
     },
