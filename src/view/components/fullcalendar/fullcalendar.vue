@@ -63,16 +63,16 @@ export default {
         if (status === 'success') {
           data.map(item => {
             if (item.classesCode === 'classes1') {
-              item.color = '#88945f'
+              item.color = '#9cd9ff'
               item.order = 1
             } else if (item.classesCode === 'classes2') {
-              item.color = 'rgb(130,205,188)'
+              item.color = '#e7c191'
               item.order = 2
             } else if (item.classesCode === 'classes3') {
-              item.color = '#73a999'
+              item.color = '#33dbe7'
               item.order = 3
             } else {
-              item.color = '#5197b0'
+              item.color = '#6ee74b'
               item.order = 4
             }
           })

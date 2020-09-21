@@ -39,7 +39,6 @@ class HttpRequest {
   }
 
   interceptors (instance, url) {
-    debugger
     // 请求拦截
     instance.interceptors.request.use(config => {
       // 添加全局的loading...
@@ -53,7 +52,6 @@ class HttpRequest {
     })
     // 响应拦截
     instance.interceptors.response.use(res => {
-      debugger
       this.destroy(url)
       const { data, status } = res
       return { data, status }
@@ -74,7 +72,6 @@ class HttpRequest {
   }
 
   request (options) {
-    debugger
     const instance = axios.create()
     // eslint-disable-next-line no-prototype-builtins
     if (options.hasOwnProperty('data')) {
