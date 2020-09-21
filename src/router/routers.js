@@ -69,6 +69,15 @@ export default [
         component: () => import('@/view/components/fullcalendar/fullcalendar.vue')
       },
       {
+        path: 'dutyClasses',
+        name: 'dutyClasses',
+        meta: {
+          icon: 'md-grid',
+          title: '班次管理'
+        },
+        component: () => import('@/view/components/tables/tables.vue')
+      },
+      {
         path: 'tree_select_page1',
         name: 'tree_select_page1',
         meta: {
@@ -219,15 +228,6 @@ export default [
           title: '图片裁剪'
         },
         component: () => import('@/view/components/cropper/cropper.vue')
-      },
-      {
-        path: 'tables_page',
-        name: 'tables_page',
-        meta: {
-          icon: 'md-grid',
-          title: '多功能表格'
-        },
-        component: () => import('@/view/components/tables/tables.vue')
       },
       {
         path: 'split_pane_page',
