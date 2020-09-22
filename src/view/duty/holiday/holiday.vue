@@ -14,10 +14,12 @@
       :weekends="calendarWeekends"
       :events="getCalendarEvents"
       :eventLimit="true"
+      :first-day="1"
       eventOrder="order"
       eventLimitText="更多"
       @dateClick="handleDateClick"
       @eventClick="handleEventClick"
+      @datesRender="handleDatesRender"
     />
   </div>
 </template>
@@ -27,6 +29,7 @@ import FullCalendar from '@fullcalendar/vue'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
+import { getHolidayList } from '@/api/duty/holiday'
 
 export default {
   name: 'holiday',
@@ -54,6 +57,23 @@ export default {
     }
   },
   methods: {
+    handleDatesRender (arg) {
+      console.log(arg.currentStart)
+      console.log(arg.currentEnd)
+    },
+    initHolidayEvents () {
+      getHolidayList(this.get, new Date().getMonth() + 1).then(res => {
+        const { data, status } = res
+        if (status !== 200) {
+          this.$Message.info('请求网络错误，请重新尝试！')
+        } else if (data.status !== 'success') {
+          this.$Message.info(data.message)
+        } else {
+          this.calendarEvents = data.data
+          this.calendarApi.refetchEvents()
+        }
+      })
+    },
     getCalendarEvents (info, successCallback, failureCallback) {
       const events = [
         ...this.calendarEvents
@@ -74,6 +94,7 @@ export default {
   },
   mounted () {
     this.calendarApi = this.$refs.fullCalendar.getApi()
+    this.initHolidayEvents()
   }
 }
 </script>
