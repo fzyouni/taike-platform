@@ -27,7 +27,7 @@ import FullCalendar from '@fullcalendar/vue'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
-import { getDutyPlan } from '../../../api/duty/dutyPlan'
+import { getDutyPlan } from '@/api/duty/dutyPlan'
 
 export default {
   name: 'fullcalendar_page',
@@ -84,11 +84,7 @@ export default {
     getCalendarEvents (info, successCallback, failureCallback) {
       debugger
       const events = [
-        ...this.calendarEvents,
-        {
-          title: info.startStr,
-          start: info.start.valueOf()
-        }
+        ...this.calendarEvents
       ]
       successCallback(events)
     },
@@ -105,6 +101,7 @@ export default {
     }
   },
   mounted () {
+    this.calendarApi = this.$refs.fullCalendar.getApi()
     this.initCalendarEvents()
   }
 }
