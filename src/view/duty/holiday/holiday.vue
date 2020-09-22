@@ -1,6 +1,7 @@
 <template>
   <div>
     <FullCalendar
+      ref="fullCalendar"
       defaultView="dayGridMonth"
       locale="zh-cn"
       :header="{
@@ -54,13 +55,8 @@ export default {
   },
   methods: {
     getCalendarEvents (info, successCallback, failureCallback) {
-      debugger
       const events = [
-        ...this.calendarEvents,
-        {
-          title: info.startStr,
-          start: info.start.valueOf()
-        }
+        ...this.calendarEvents
       ]
       successCallback(events)
     },
@@ -77,7 +73,7 @@ export default {
     }
   },
   mounted () {
-    // this.calendarApi = this.$refs.fullCalendar.getApi()
+    this.calendarApi = this.$refs.fullCalendar.getApi()
   }
 }
 </script>

@@ -82,7 +82,6 @@ export default {
       })
     },
     getCalendarEvents (info, successCallback, failureCallback) {
-      debugger
       const events = [
         ...this.calendarEvents
       ]
