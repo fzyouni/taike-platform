@@ -27,7 +27,7 @@ import FullCalendar from '@fullcalendar/vue'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
-import { getDutyPlan } from '../../../api/dutyPlan'
+import { getDutyPlan } from '../../../api/duty/dutyPlan'
 
 export default {
   name: 'fullcalendar_page',
