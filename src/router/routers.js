@@ -66,7 +66,7 @@ export default [
           icon: 'ios-calendar-outline',
           title: '值班计划'
         },
-        component: () => import('@/view/components/fullcalendar/fullcalendar.vue')
+        component: () => import('@/view/duty/dutyPlan/dutyPlan.vue')
       },
       {
         path: 'dutyClasses',
@@ -75,16 +75,7 @@ export default [
           icon: 'md-grid',
           title: '班次管理'
         },
-        component: () => import('@/view/components/tables/tables.vue')
-      },
-      {
-        path: 'tree_select_page1',
-        name: 'tree_select_page1',
-        meta: {
-          icon: 'md-arrow-dropdown-circle',
-          title: '树状下拉选择器'
-        },
-        component: () => import('@/view/components/tree-select/index.vue')
+        component: () => import('@/view/duty/dutyClasses/dutyClasses.vue')
       }
     ]
   },
