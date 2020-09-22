@@ -26,10 +26,10 @@ export default {
       columns: [
         {
           title: '序号',
-          width: 60,
+          key: '',
+          width: 80,
           render: (h, params) => {
-            return h('span', {
-            }, params.index + 1)
+            return h('span', params.index + (this.pageCurrent - 1) * this.pageSize + 1)
           }
         },
         { title: '人员姓名', width: 100, key: 'personName' },

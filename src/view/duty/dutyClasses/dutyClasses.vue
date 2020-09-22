@@ -24,14 +24,6 @@ export default {
       dataCount: 0,
       pageCurrent: 1,
       columns: [
-        {
-          title: '序号',
-          width: 80,
-          render: (h, params) => {
-            return h('span', {
-            }, params.index + 1)
-          }
-        },
         { title: '班次名称', key: 'classesName' },
         { title: '班次编码', key: 'classesCode' },
         { title: '值班开始时间', key: 'classesStartTime' },
