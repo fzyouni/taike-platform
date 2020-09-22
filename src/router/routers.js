@@ -76,6 +76,33 @@ export default [
           title: '班次管理'
         },
         component: () => import('@/view/duty/dutyClasses/dutyClasses.vue')
+      },
+      {
+        path: 'dutyPerson',
+        name: 'dutyPerson',
+        meta: {
+          icon: 'md-person',
+          title: '值班人员'
+        },
+        component: () => import('@/view/duty/dutyPerson/dutyPerson.vue')
+      },
+      {
+        path: 'holiday',
+        name: 'holiday',
+        meta: {
+          icon: 'md-play',
+          title: '节假日设置'
+        },
+        component: () => import('@/view/duty/holiday/holiday.vue')
+      },
+      {
+        path: 'dutyRule',
+        name: 'dutyRule',
+        meta: {
+          icon: 'md-power',
+          title: '值班规则设置'
+        },
+        component: () => import('@/view/duty/dutyRule/dutyRule.vue')
       }
     ]
   },
