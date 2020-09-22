@@ -62,17 +62,14 @@ export default {
         const { code, status, message, data } = res.data
         if (status === 'success') {
           data.map(item => {
+            item.color = '#9cd9ff'
             if (item.classesCode === 'classes1') {
-              item.color = '#9cd9ff'
               item.order = 1
             } else if (item.classesCode === 'classes2') {
-              item.color = '#e7c191'
               item.order = 2
             } else if (item.classesCode === 'classes3') {
-              item.color = '#33dbe7'
               item.order = 3
             } else {
-              item.color = '#6ee74b'
               item.order = 4
             }
           })
