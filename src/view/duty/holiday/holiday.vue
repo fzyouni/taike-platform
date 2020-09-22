@@ -1,24 +1,23 @@
 <template>
   <div>
     <FullCalendar
-      ref="fullCalendar"
       defaultView="dayGridMonth"
       locale="zh-cn"
       :header="{
-        left: 'prev,next today',
+        left: '',
         center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+        right: ''
       }"
       :buttonText="buttonText"
       :plugins="calendarPlugins"
       :weekends="calendarWeekends"
       :events="getCalendarEvents"
-      eventOrder="order"
       :eventLimit="true"
+      eventOrder="order"
       eventLimitText="更多"
       @dateClick="handleDateClick"
       @eventClick="handleEventClick"
-      />
+    />
   </div>
 </template>
 
@@ -27,10 +26,9 @@ import FullCalendar from '@fullcalendar/vue'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
-import { getDutyPlan } from '../../../api/duty/dutyPlan'
 
 export default {
-  name: 'fullcalendar_page',
+  name: 'holiday',
   components: {
     FullCalendar
   },
@@ -55,32 +53,6 @@ export default {
     }
   },
   methods: {
-    initCalendarEvents () {
-      getDutyPlan(new Date().getFullYear(), new Date().getMonth() + 1).then(res => {
-        debugger
-        // eslint-disable-next-line no-unused-vars
-        const { code, status, message, data } = res.data
-        if (status === 'success') {
-          data.map(item => {
-            if (item.classesCode === 'classes1') {
-              item.color = '#9cd9ff'
-              item.order = 1
-            } else if (item.classesCode === 'classes2') {
-              item.color = '#e7c191'
-              item.order = 2
-            } else if (item.classesCode === 'classes3') {
-              item.color = '#33dbe7'
-              item.order = 3
-            } else {
-              item.color = '#6ee74b'
-              item.order = 4
-            }
-          })
-          this.calendarEvents = data
-          this.calendarApi.refetchEvents()
-        }
-      })
-    },
     getCalendarEvents (info, successCallback, failureCallback) {
       debugger
       const events = [
@@ -105,7 +77,7 @@ export default {
     }
   },
   mounted () {
-    this.initCalendarEvents()
+    // this.calendarApi = this.$refs.fullCalendar.getApi()
   }
 }
 </script>

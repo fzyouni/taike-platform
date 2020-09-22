@@ -12,9 +12,9 @@
 
 <script>
 import Tables from '_c/tables'
-import { getDutyClassesList } from '@/api/duty/dutyClasses'
+import { getDutyPersonList } from '@/api/duty/dutyPerson'
 export default {
-  name: 'tables_page',
+  name: 'dutyPerson',
   components: {
     Tables
   },
@@ -26,25 +26,26 @@ export default {
       columns: [
         {
           title: '序号',
-          width: 80,
+          width: 60,
           render: (h, params) => {
             return h('span', {
             }, params.index + 1)
           }
         },
-        { title: '班次名称', key: 'classesName' },
-        { title: '班次编码', key: 'classesCode' },
-        { title: '值班开始时间', key: 'classesStartTime' },
-        { title: '值班结束时间', key: 'classesEndTime' },
-        { title: '值班人数', key: 'classesPersonNumber' }
+        { title: '人员姓名', width: 100, key: 'personName' },
+        { title: '系统登录名', width: 100, key: 'personLoginName' },
+        { title: '人员类型', width: 100, key: 'personTypeName' },
+        { title: '性别', width: 60, key: 'gender' },
+        { title: '联系方式', width: 120, key: 'cellphone' },
+        { title: '邮箱地址', width: 140, key: 'email' },
+        { title: '是否参与排班', width: 120, key: 'autoDutyFlag' },
+        { title: '排班编号', key: 'personNumber' }
       ],
       tableData: []
     }
   },
   methods: {
-    addClassesInfo () {},
     nowPageSize (index) {
-      // 实时获取当前需要显示的条数
       this.pageSize = index
     },
     changePage () {
@@ -54,19 +55,24 @@ export default {
         filename: `table-${(new Date()).valueOf()}.csv`
       })
     },
-    initDutyClassesList () {
-      getDutyClassesList(this.pageCurrent, this.pageSize).then(res => {
-        debugger
-        const { data } = res.data
-        this.dataCount = data.total
-        this.pageSize = data.pages
-        this.pageCurrent = data.current
-        this.tableData = data.records
+    initTableData () {
+      getDutyPersonList(this.pageCurrent, this.pageSize).then(res => {
+        const { data, status } = res
+        if (status !== 200) {
+          this.$Message.error('网络请求异常！')
+        } else if (data.status === 'error') {
+          this.$Message.error(data.message)
+        } else {
+          this.pageSize = data.data.pages
+          this.dataCount = data.data.total
+          this.pageCurrent = data.data.current
+          this.tableData = data.data.records
+        }
       })
     }
   },
   mounted () {
-    this.initDutyClassesList()
+    this.initTableData()
   }
 }
 </script>
