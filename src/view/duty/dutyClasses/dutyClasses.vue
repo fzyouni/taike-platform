@@ -24,12 +24,19 @@ export default {
       dataCount: 0,
       pageCurrent: 1,
       columns: [
+        {
+          title: '序号',
+          width: 80,
+          render: (h, params) => {
+            return h('span', {
+            }, params.index + 1)
+          }
+        },
         { title: '班次名称', key: 'classesName' },
         { title: '班次编码', key: 'classesCode' },
         { title: '值班开始时间', key: 'classesStartTime' },
         { title: '值班结束时间', key: 'classesEndTime' },
-        { title: '值班人数', key: 'classesPersonNumber' },
-        { title: '值班排序', key: 'classesOrder' }
+        { title: '值班人数', key: 'classesPersonNumber' }
       ],
       tableData: []
     }
