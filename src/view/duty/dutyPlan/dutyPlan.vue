@@ -15,6 +15,7 @@
       :events="getCalendarEvents"
       :first-day="1"
       :eventLimit="true"
+      :displayEventTime="false"
       eventOrder="order"
       eventLimitText="更多"
       @dateClick="handleDateClick"
@@ -59,7 +60,7 @@ export default {
     initCalendarEvents () {
       getDutyPlan(new Date().getFullYear(), new Date().getMonth() + 1).then(res => {
         res.data.map(item => {
-          item.color = '#9cd9ff'
+          item.color = '#85e389'
           if (item.classesCode === 'classes1') {
             item.order = 1
           } else if (item.classesCode === 'classes2') {
