@@ -5,7 +5,7 @@
       defaultView="dayGridMonth"
       locale="zh-cn"
       :header="{
-        left: '',
+        left: 'prev,next',
         center: 'title',
         right: ''
       }"
@@ -14,6 +14,7 @@
       :weekends="calendarWeekends"
       :events="getCalendarEvents"
       :eventLimit="true"
+      :editable="true"
       :first-day="1"
       eventOrder="order"
       eventLimitText="更多"
@@ -62,16 +63,9 @@ export default {
       console.log(arg.currentEnd)
     },
     initHolidayEvents () {
-      getHolidayList(this.get, new Date().getMonth() + 1).then(res => {
-        const { data, status } = res
-        if (status !== 200) {
-          this.$Message.info('请求网络错误，请重新尝试！')
-        } else if (data.status !== 'success') {
-          this.$Message.info(data.message)
-        } else {
-          this.calendarEvents = data.data
-          this.calendarApi.refetchEvents()
-        }
+      getHolidayList(new Date().getFullYear(), new Date().getMonth() + 1).then(res => {
+        this.calendarEvents = res.data
+        this.calendarApi.refetchEvents()
       })
     },
     getCalendarEvents (info, successCallback, failureCallback) {

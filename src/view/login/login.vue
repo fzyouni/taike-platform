@@ -31,14 +31,10 @@ export default {
     ]),
     handleSubmit ({ userName, userPwd }) {
       this.handleLogin({ userName, userPwd }).then(res => {
-        this.getUserInfo(userName).then(res => {
-          if (res.status === 'success') {
-            this.$router.push({
-              name: this.$config.homeName
-            })
-          } else {
-
-          }
+        this.getUserInfo(userName).then(() => {
+          this.$router.push({
+            name: this.$config.homeName
+          })
         })
       })
     }

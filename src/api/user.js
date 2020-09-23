@@ -13,11 +13,7 @@ export const login = ({ userName, userPwd }) => {
 }
 
 export const getUserInfo = (token, userName) => {
-  debugger
   return axios.request({
-    headers: {
-      authToken: token
-    },
     url: 'user/showUserInfoByLoginName',
     params: {
       loginName: userName

@@ -49,11 +49,10 @@ export default {
     initDutyClassesList () {
       getDutyClassesList(this.pageCurrent, this.pageSize).then(res => {
         debugger
-        const { data } = res.data
-        this.dataCount = data.total
-        this.pageSize = data.pages
-        this.pageCurrent = data.current
-        this.tableData = data.records
+        this.dataCount = res.data.total
+        this.pageSize = res.data.pages
+        this.pageCurrent = res.data.current
+        this.tableData = res.data.records
       })
     }
   },

@@ -58,25 +58,20 @@ export default {
   methods: {
     initCalendarEvents () {
       getDutyPlan(new Date().getFullYear(), new Date().getMonth() + 1).then(res => {
-        debugger
-        // eslint-disable-next-line no-unused-vars
-        const { code, status, message, data } = res.data
-        if (status === 'success') {
-          data.map(item => {
-            item.color = '#9cd9ff'
-            if (item.classesCode === 'classes1') {
-              item.order = 1
-            } else if (item.classesCode === 'classes2') {
-              item.order = 2
-            } else if (item.classesCode === 'classes3') {
-              item.order = 3
-            } else {
-              item.order = 4
-            }
-          })
-          this.calendarEvents = data
-          this.calendarApi.refetchEvents()
-        }
+        res.data.map(item => {
+          item.color = '#9cd9ff'
+          if (item.classesCode === 'classes1') {
+            item.order = 1
+          } else if (item.classesCode === 'classes2') {
+            item.order = 2
+          } else if (item.classesCode === 'classes3') {
+            item.order = 3
+          } else {
+            item.order = 4
+          }
+        })
+        this.calendarEvents = res.data
+        this.calendarApi.refetchEvents()
       })
     },
     getCalendarEvents (info, successCallback, failureCallback) {

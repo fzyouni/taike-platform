@@ -81,13 +81,8 @@ export default {
           userName,
           userPwd
         }).then(res => {
-          const data = res.data
-          if (data.status === 'success') {
-            commit('setToken', data.data)
-            resolve(userName)
-          } else {
-            reject(data.message)
-          }
+          commit('setToken', res.data)
+          resolve(userName)
         }).catch(err => {
           reject(err)
         })
@@ -114,17 +109,12 @@ export default {
       return new Promise((resolve, reject) => {
         try {
           getUserInfo(state.token, userName).then(res => {
-            const data = res.data
-            if (data.status === 'success') {
-              // commit('setAvator', data.activateState)
-              commit('setUserName', data.data.userName)
-              commit('setUserId', data.data.userId)
-              commit('setAccess', data.data.activateState)
-              commit('setHasGetInfo', true)
-              resolve(data)
-            } else {
-              reject(data)
-            }
+            // commit('setAvator', data.activateState)
+            commit('setUserName', res.data.userName)
+            commit('setUserId', res.data.userId)
+            commit('setAccess', res.data.activateState)
+            commit('setHasGetInfo', true)
+            resolve(res)
           }).catch(err => {
             reject(err)
           })

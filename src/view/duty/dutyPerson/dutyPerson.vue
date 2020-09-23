@@ -24,14 +24,6 @@ export default {
       dataCount: 0,
       pageCurrent: 1,
       columns: [
-        {
-          title: '序号',
-          key: '',
-          width: 80,
-          render: (h, params) => {
-            return h('span', params.index + (this.pageCurrent - 1) * this.pageSize + 1)
-          }
-        },
         { title: '人员姓名', width: 100, key: 'personName' },
         { title: '系统登录名', width: 100, key: 'personLoginName' },
         { title: '人员类型', width: 100, key: 'personTypeName' },
@@ -57,17 +49,10 @@ export default {
     },
     initTableData () {
       getDutyPersonList(this.pageCurrent, this.pageSize).then(res => {
-        const { data, status } = res
-        if (status !== 200) {
-          this.$Message.error('网络请求异常！')
-        } else if (data.status === 'error') {
-          this.$Message.error(data.message)
-        } else {
-          this.pageSize = data.data.pages
-          this.dataCount = data.data.total
-          this.pageCurrent = data.data.current
-          this.tableData = data.data.records
-        }
+        this.pageSize = res.data.pages
+        this.dataCount = res.data.total
+        this.pageCurrent = res.data.current
+        this.tableData = res.data.records
       })
     }
   },
