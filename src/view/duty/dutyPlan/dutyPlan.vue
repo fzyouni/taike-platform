@@ -5,9 +5,22 @@
       defaultView="dayGridMonth"
       locale="zh-cn"
       :header="{
-        left: 'prev,next today',
+        left: 'prev,next',
         center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+        right: 'today personType classes'
+      }"
+      :customButtons="{
+        prev: {
+          click: prevView
+        },
+        personType: {
+          text: '人员类型',
+          click: personChoose
+        },
+        classes: {
+          text: '值班班次',
+          click: classesChoose
+        }
       }"
       :buttonText="buttonText"
       :plugins="calendarPlugins"
@@ -57,10 +70,23 @@ export default {
     }
   },
   methods: {
-    initCalendarEvents () {
-      getDutyPlan(new Date().getFullYear(), new Date().getMonth() + 1).then(res => {
+    prevView () {
+      alert(this.calendarApi.getDate().getFullYear() + '-' + this.calendarApi.getDate().getMonth() + '-' + this.calendarApi.getDate().getDate())
+      this.calendarApi.prev()
+    },
+    personChoose () {
+      alert('personChoose')
+    },
+    classesChoose () {
+      alert('classesChoose')
+    },
+    changeMonth (start, end, currentMonthStartDate) {
+      console.log(currentMonthStartDate)
+    },
+    initCalendarEvents (year, month) {
+      getDutyPlan(year, month).then(res => {
         res.data.map(item => {
-          item.color = '#85e389'
+          item.color = '#55dece'
           if (item.classesCode === 'classes1') {
             item.order = 1
           } else if (item.classesCode === 'classes2') {
@@ -95,7 +121,7 @@ export default {
   },
   mounted () {
     this.calendarApi = this.$refs.fullCalendar.getApi()
-    this.initCalendarEvents()
+    this.initCalendarEvents(new Date().getFullYear(), new Date().getMonth() + 1)
   }
 }
 </script>
