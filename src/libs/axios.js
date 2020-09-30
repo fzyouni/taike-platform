@@ -59,7 +59,7 @@ class HttpRequest {
       if (data.status === 'success') {
         return data
       } else {
-        setTimeout(Message.error(data.message + '错误码：' + data.code), 2000)
+        setTimeout(Message.error(data.message + '错误码：' + data.code), 5000)
       }
     }, error => {
       this.destroy(url)
