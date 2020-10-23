@@ -51,6 +51,25 @@ export default [
     ]
   },
   {
+    path: '/base',
+    name: 'base',
+    meta: {
+      icon: '',
+      title: '基础信息'
+    },
+    component: Main,
+    children: [
+      {
+        path: 'dictionary',
+        name: 'dictionary',
+        meta: {
+          icon: 'ios-calendar-outline',
+          title: '数据字典'
+        },
+        component: () => import('@/view/base/dictionary/node.vue')
+      }]
+  },
+  {
     path: '/duty',
     name: 'duty',
     meta: {
