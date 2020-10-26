@@ -60,13 +60,13 @@ export default [
     component: Main,
     children: [
       {
-        path: 'dictionary',
-        name: 'dictionary',
+        path: 'dataDict',
+        name: 'dataDict',
         meta: {
           icon: 'ios-calendar-outline',
           title: '数据字典'
         },
-        component: () => import('@/view/base/dictionary/node.vue')
+        component: () => import('@/view/base/dataDict/node.vue')
       }]
   },
   {

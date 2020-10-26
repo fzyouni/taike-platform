@@ -12,7 +12,7 @@
 
 <script>
 import Tables from '_c/tables'
-import { showSysDictValueList } from '@/api/dictionary/node'
+import { showSysDictValueList } from '@/api/base/dataDict'
 export default {
   name: 'dictValue',
   components: {

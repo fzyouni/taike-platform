@@ -5,7 +5,7 @@ export default {
   qr_code_page: '二维码',
   count_to_page: '数字渐变',
   base: '基础信息',
-  dictionary: '数据字典',
+  dataDict: '数据字典',
   duty: '值班管理',
   dutyPlan: '值班计划',
   dutyClasses: '值班班次',
