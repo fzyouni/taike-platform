@@ -7,8 +7,9 @@
       <page :total="dataCount" :page-size="pageSize" @on-change="changePage" @on-page-size-change="nowPageSize"
             show-total show-sizer show-elevator/>
     </Card>
-    <Modal :title="dialogTitle" v-model="showDialog" :closable="false" :mask-closable="false" :width="40" >
-      <Form v-if="showDialog" ref="dictFormData" :model="formData" :rules="ruleValidate" :label-width="120" label-position="left">
+    <Modal :title="dialogTitle" v-model="showDialog" :closable="false" :mask-closable="false" :width="40">
+      <Form v-if="showDialog" ref="dictFormData" :model="formData" :rules="ruleValidate" :label-width="120"
+            label-position="left">
         <FormItem label="节点类别名称：" prop="nodeName">
           <Input type="text" v-model="formData.nodeName" :maxlength="50"/>
         </FormItem>
@@ -18,14 +19,14 @@
         <FormItem label="节点排序：" prop="nodeOrder">
           <InputNumber :max="9999" :min="1" v-model="formData.nodeOrder"/>
         </FormItem>
-        <FormItem  label="是否叶子节点：" prop="isLeaf">
+        <FormItem label="是否叶子节点：" prop="isLeaf">
           <RadioGroup v-model="formData.isLeaf">
             <Radio label="1">叶子节点</Radio>
             <Radio label="0">非叶子节点</Radio>
           </RadioGroup>
         </FormItem>
         <FormItem label="状态：">
-          <i-switch v-model="formData.status" size="large" :true-value="0" :false-value="1">
+          <i-switch v-model="formData.status" size="large" :true-value="'0'" :false-value="'1'">
             <span slot="open">启用</span>
             <span slot="close">禁用</span>
           </i-switch>
@@ -35,7 +36,7 @@
         </FormItem>
       </Form>
       <div slot="footer">
-        <Button type="ghost" @click="cancelForm">取消</Button>
+        <Button type="primary" ghost @click="cancelForm">取消</Button>
         <Button type="primary" @click="submitFormData">确定</Button>
       </div>
     </Modal>
@@ -45,7 +46,8 @@
 <script>
 import Tables from '_c/tables'
 import dictValue from './value'
-import { getDictNodeList } from '@/api/base/dataDict'
+import { getDictNodeList, addSysDictNodeInfo } from '@/api/base/dataDict'
+
 export default {
   name: 'dictNode',
   components: {
@@ -60,7 +62,7 @@ export default {
         nodeCode: '',
         isLeaf: '1',
         nodeOrder: 1,
-        status: 0,
+        status: '0',
         remark: ''
       },
       ruleValidate: {
@@ -89,9 +91,11 @@ export default {
         { title: '排序', key: 'nodeOrder' },
         { title: '状态', key: 'status' },
         { title: '节点描述', key: 'remark' },
+        { title: '创建时间', width: 160, key: 'createTime' },
         {
-          title: '属性值设置',
+          title: '操作',
           key: 'action',
+          width: 300,
           align: 'center',
           render: (h, params) => {
             return h('div', [
@@ -118,11 +122,33 @@ export default {
                     })
                   }
                 }
-              }, '属性值列表')
+              }, '属性值列表'),
+              h('Button', {
+                props: {
+                  type: 'primary'
+                },
+                style: {
+                  'margin-right': '5px'
+                },
+                on: {
+                  click: () => {
+                    this.updateRowData(params.row)
+                  }
+                }
+              }, '编辑'),
+              h('Button', {
+                props: {
+                  type: 'error'
+                },
+                on: {
+                  click: () => {
+                    this.deleteRow(params.row.nodeId)
+                  }
+                }
+              }, '删除')
             ])
           }
-        },
-        { title: '创建时间', key: 'createTime' }
+        }
       ],
       tableData: []
     }
@@ -132,18 +158,31 @@ export default {
       this.dialogTitle = '新增节点类别'
       this.showDialog = true
     },
+    updateRowData (row) {
+      this.dialogTitle = '编辑节点类别'
+      Object.assign(this.formData, row)
+      this.showDialog = true
+    },
+    deleteRow (nodeId) {
+    },
     submitFormData () {
       this.$refs.dictFormData.validate(valid => {
         if (valid) {
-          this.showDialog = false
-          this.$Message.info('提交事件')
+          addSysDictNodeInfo(this.formData).then((res) => {
+            if (res.code === '200') {
+              this.showDialog = false
+              this.initTableData()
+              this.$Message.success(res.message)
+            } else {
+              this.$Message.error(res.message)
+            }
+          })
         }
       })
     },
     cancelForm () {
       this.showDialog = false
-      this.$refs.dictFormData.resetFields()
-      this.$Message.info('取消事件')
+      Object.assign(this.$data.formData, this.$options.data().formData)
     },
     nowPageSize (index) {
       this.pageSize = index

@@ -4,6 +4,7 @@ export default {
   components: '组件',
   qr_code_page: '二维码',
   count_to_page: '数字渐变',
+  dictionary: '未知地址',
   base: '基础信息',
   dataDict: '数据字典',
   duty: '值班管理',
