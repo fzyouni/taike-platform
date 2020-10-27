@@ -23,7 +23,7 @@ export const getDictNodeList = (currentPage, pageSize) => {
  * @param nodeOrder 排序值
  * @returns {*}
  */
-export const addSysDictNodeInfo = (nodeCode, nodeName, isLeaf, status, remark, nodeOrder) => {
+export const addSysDictNodeInfo = ({ nodeCode, nodeName, isLeaf, status, remark, nodeOrder }) => {
   return axios.request({
     url: 'sysDict/addSysDictNodeInfo',
     data: { nodeCode, nodeName, isLeaf, status, remark, nodeOrder },
@@ -39,7 +39,7 @@ export const addSysDictNodeInfo = (nodeCode, nodeName, isLeaf, status, remark, n
  * @param remark 描述
  * @param nodeOrder 排序值
  */
-export const updateSysDictNodeInfo = (nodeId, nodeCode, nodeName, status, remark, nodeOrder) => {
+export const updateSysDictNodeInfo = ({ nodeId, nodeCode, nodeName, status, remark, nodeOrder }) => {
   return axios.request({
     url: 'sysDict/updateSysDictNodeInfo',
     data: { nodeId, nodeCode, nodeName, status, remark, nodeOrder },
