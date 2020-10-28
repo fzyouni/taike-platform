@@ -46,7 +46,7 @@
 <script>
 import Tables from '_c/tables'
 import dictValue from './value'
-import { getDictNodeList, addSysDictNodeInfo } from '@/api/base/dataDict'
+import { getDictNodeList, addSysDictNodeInfo, updateSysDictNodeInfo } from '@/api/base/dataDict'
 
 export default {
   name: 'dictNode',
@@ -58,6 +58,7 @@ export default {
       showDialog: false,
       dialogTitle: '',
       formData: {
+        nodeId: '',
         nodeName: '',
         nodeCode: '',
         isLeaf: '1',
@@ -168,20 +169,38 @@ export default {
     submitFormData () {
       this.$refs.dictFormData.validate(valid => {
         if (valid) {
-          addSysDictNodeInfo(this.formData).then((res) => {
-            if (res.code === '200') {
-              this.showDialog = false
-              this.initTableData()
-              this.$Message.success(res.message)
-            } else {
-              this.$Message.error(res.message)
-            }
-          })
+          if (this.formData.nodeId.length === 0) {
+            addSysDictNodeInfo(this.formData).then(res => {
+              if (res.code === '200') {
+                this.showDialog = false
+                this.clearFormData()
+                this.initTableData()
+                this.$Message.success(res.message)
+              } else {
+                this.$Message.error(res.message)
+              }
+            })
+          } else {
+            updateSysDictNodeInfo(this.formData).then(res => {
+              const { code, message } = res
+              if (code === '200') {
+                this.showDialog = false
+                this.clearFormData()
+                this.initTableData()
+                this.$Message.success(message)
+              } else {
+                this.$Message.error(message)
+              }
+            })
+          }
         }
       })
     },
     cancelForm () {
       this.showDialog = false
+      this.clearFormData()
+    },
+    clearFormData () {
       Object.assign(this.$data.formData, this.$options.data().formData)
     },
     nowPageSize (index) {
