@@ -19,12 +19,12 @@
         <FormItem label="节点排序：" prop="nodeOrder">
           <InputNumber :max="9999" :min="1" v-model="formData.nodeOrder"/>
         </FormItem>
-        <FormItem label="是否叶子节点：" prop="isLeaf">
+        <!--<FormItem label="是否叶子节点：" prop="isLeaf">
           <RadioGroup v-model="formData.isLeaf">
             <Radio label="1">叶子节点</Radio>
             <Radio label="0">非叶子节点</Radio>
           </RadioGroup>
-        </FormItem>
+        </FormItem>-->
         <FormItem label="状态：">
           <i-switch v-model="formData.status" size="large" :true-value="'0'" :false-value="'1'">
             <span slot="open">启用</span>
@@ -46,7 +46,13 @@
 <script>
 import Tables from '_c/tables'
 import dictValue from './value'
-import { getDictNodeList, addSysDictNodeInfo, updateSysDictNodeInfo } from '@/api/base/dataDict'
+import {
+  getDictNodeList,
+  addSysDictNodeInfo,
+  updateSysDictNodeInfo,
+  updateSysDictNodeState,
+  deleteSysDictNode
+} from '@/api/base/dataDict'
 
 export default {
   name: 'dictNode',
@@ -54,6 +60,7 @@ export default {
     Tables
   },
   data () {
+    const that = this
     return {
       showDialog: false,
       dialogTitle: '',
@@ -86,13 +93,71 @@ export default {
       dataCount: 0,
       pageCurrent: 1,
       columns: [
-        { title: '节点类别名称', key: 'nodeName' },
-        { title: '节点类别编码', key: 'nodeCode' },
-        { title: '叶子节点', key: 'isLeaf' },
-        { title: '排序', key: 'nodeOrder' },
-        { title: '状态', key: 'status' },
-        { title: '节点描述', key: 'remark' },
-        { title: '创建时间', width: 160, key: 'createTime' },
+        {
+          title: '节点类别名称',
+          key: 'nodeName'
+        },
+        {
+          title: '节点类别编码',
+          key: 'nodeCode'
+        },
+        {
+          title: '是否叶子节点',
+          key: 'isLeaf',
+          render (h, params) {
+            return h('span', params.row.isLeaf === '0' ? '否' : '是')
+          }
+        },
+        {
+          title: '排序',
+          key: 'nodeOrder'
+        },
+        {
+          title: '状态',
+          key: 'status',
+          align: 'center',
+          render (h, params) {
+            return h('i-switch', {
+              props: {
+                'true-value': '0',
+                'false-value': '1',
+                size: 'large',
+                value: params.row.status
+              },
+              on: {
+                'on-change': (value) => {
+                  updateSysDictNodeState(params.row.nodeId, value).then(res => {
+                    const { code, message } = res
+                    if (code === '200') {
+                      that.$Message.info(message)
+                    } else {
+                      // todo 回改状态值
+                      that.$Message.error(message)
+                    }
+                  })
+                }
+              }
+            }, [
+              h('span', {
+                slot: 'open',
+                domProps: { innerHTML: '启用' }
+              }),
+              h('span', {
+                slot: 'close',
+                domProps: { innerHTML: '禁用' }
+              })
+            ])
+          }
+        },
+        {
+          title: '节点描述',
+          key: 'remark'
+        },
+        {
+          title: '创建时间',
+          width: 160,
+          key: 'createTime'
+        },
         {
           title: '操作',
           key: 'action',
@@ -165,6 +230,15 @@ export default {
       this.showDialog = true
     },
     deleteRow (nodeId) {
+      deleteSysDictNode(nodeId).then(res => {
+        const { code, message } = res
+        if (code === '200') {
+          this.initTableData()
+          this.$Message.info(message)
+        } else {
+          this.$Message.error(message)
+        }
+      })
     },
     submitFormData () {
       this.$refs.dictFormData.validate(valid => {
@@ -215,7 +289,7 @@ export default {
     },
     initTableData () {
       getDictNodeList(this.pageCurrent, this.pageSize).then(res => {
-        this.pageSize = res.data.pages
+        this.pageSize = res.data.size
         this.dataCount = res.data.total
         this.pageCurrent = res.data.current
         this.tableData = res.data.records
