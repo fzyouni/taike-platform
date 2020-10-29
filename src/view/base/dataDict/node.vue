@@ -208,7 +208,7 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.deleteRow(params.row.nodeId)
+                    this.deleteRow(params.row)
                   }
                 }
               }, '删除')
@@ -229,14 +229,20 @@ export default {
       Object.assign(this.formData, row)
       this.showDialog = true
     },
-    deleteRow (nodeId) {
-      deleteSysDictNode(nodeId).then(res => {
-        const { code, message } = res
-        if (code === '200') {
-          this.initTableData()
-          this.$Message.info(message)
-        } else {
-          this.$Message.error(message)
+    deleteRow (row) {
+      this.$Modal.confirm({
+        title: '删除节点类型！',
+        content: '确认删除' + row.nodeName + '节点类型吗？',
+        onOk: () => {
+          deleteSysDictNode(row.nodeId).then(res => {
+            const { code, message } = res
+            if (code === '200') {
+              this.initTableData()
+              this.$Message.info(message)
+            } else {
+              this.$Message.error(message)
+            }
+          })
         }
       })
     },
