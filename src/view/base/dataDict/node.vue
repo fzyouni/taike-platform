@@ -52,7 +52,7 @@ import {
   updateSysDictNodeInfo,
   updateSysDictNodeState,
   deleteSysDictNode
-} from '@/api/base/dataDict'
+} from '@/api/base/dataDictNode'
 
 export default {
   name: 'dictNode',
