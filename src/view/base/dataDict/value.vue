@@ -231,7 +231,7 @@ export default {
     submitFormData () {
       this.$refs.dictFormData.validate(valid => {
         if (valid) {
-          if (this.formData.nodeId.length === 0) {
+          if (this.formData.dictId.length === 0) {
             addSysDictValueInfo(this.formData).then(res => {
               if (res.code === '200') {
                 this.showDialog = false
