@@ -40,12 +40,16 @@
         <Button type="primary" @click="submitFormData">确定</Button>
       </div>
     </Modal>
+    <Modal :title="dictValueTitle" v-model="showValueDialog" :closable="true" :mask-closable="false" :width="80">
+      <DictValue v-if="showValueDialog" :node-id="dictValueNodeId"></DictValue>
+      <div slot="footer"></div>
+    </Modal>
   </div>
 </template>
 
 <script>
 import Tables from '_c/tables'
-import dictValue from './value'
+import DictValue from './value'
 import {
   getDictNodeList,
   addSysDictNodeInfo,
@@ -57,11 +61,15 @@ import {
 export default {
   name: 'dictNode',
   components: {
+    DictValue,
     Tables
   },
   data () {
     const that = this
     return {
+      dictValueTitle: '节点属性值列表',
+      showValueDialog: false,
+      dictValueNodeId: '',
       showDialog: false,
       dialogTitle: '',
       formData: {
@@ -174,18 +182,8 @@ export default {
                 },
                 on: {
                   click: () => {
-                    this.$Modal.success({
-                      title: '节点属性值列表',
-                      scrollable: true,
-                      width: 1000,
-                      // 开启右上角关闭图标
-                      closable: true,
-                      render: (h) => {
-                        return h(dictValue, {
-                          props: { nodeId: params.row.nodeId }
-                        })
-                      }
-                    })
+                    this.dictValueNodeId = params.row.nodeId
+                    this.showValueDialog = true
                   }
                 }
               }, '属性值列表'),
