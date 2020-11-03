@@ -11,10 +11,10 @@
       <Form v-if="showDialog" ref="dictFormData" :model="formData" :rules="ruleValidate" :label-width="120"
             label-position="left">
         <FormItem label="字典值名称：" prop="dictKey">
-          <Input type="text" v-model="formData.dictKey" :maxlength="50"/>
+          <Input type="text" v-model="formData.dictValue" :maxlength="50"/>
         </FormItem>
         <FormItem label="字典值编码：" prop="dictValue">
-          <Input type="text" v-model="formData.dictValue" :maxlength="50"/>
+          <Input type="text" v-model="formData.dictKey" :maxlength="50"/>
         </FormItem>
         <FormItem label="字典值排序：" prop="dictOrder">
           <InputNumber :max="9999" :min="1" v-model="formData.dictOrder"/>
@@ -232,6 +232,7 @@ export default {
       this.$refs.dictFormData.validate(valid => {
         if (valid) {
           if (this.formData.dictId.length === 0) {
+            debugger
             addSysDictValueInfo(this.formData).then(res => {
               if (res.code === '200') {
                 this.showDialog = false
