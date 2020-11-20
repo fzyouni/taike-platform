@@ -67,7 +67,17 @@ export default [
           title: '数据字典'
         },
         component: () => import('@/view/base/dataDict/node.vue')
-      }]
+      },
+      {
+        path: 'regionDict',
+        name: 'regionDict',
+        meta: {
+          icon: 'ios-calendar-outline',
+          title: '行政区划字典'
+        },
+        component: () => import('@/view/base/region/region.vue')
+      }
+    ]
   },
   {
     path: '/duty',

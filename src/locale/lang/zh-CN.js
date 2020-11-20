@@ -7,6 +7,7 @@ export default {
   dictionary: '未知地址',
   base: '基础信息',
   dataDict: '数据字典',
+  regionDict: '行政区划字典',
   duty: '值班管理',
   dutyPlan: '值班计划',
   dutyClasses: '值班班次',
